@@ -163,15 +163,34 @@ module.exports = grammar({
       $.color_end
     ),
 
-    code_start: $ => prec(9, seq('{code', optional(seq(':', /[^\}]+/)), '}')),
+    language: $ => /[a-z]+/,
+    code_start: $ => prec(9, seq('{code', optional(seq(':', $.language)), '}')),
     code_end: $ => prec(10, '{code}'),
     code_body: $ => prec(5, nocode),
 
-    code_block: $ => seq(
+    js_code_start: $ => prec(9, '{code:js}'),
+    js_code_body: $ => prec(5, nocode),
+    js_code_block: $ => seq(
+      $.js_code_start,
+      $.js_code_body,
+      $.code_end,
+    ),
+
+    json_code_start: $ => prec(9, '{code:json}'),
+    json_code_body: $ => prec(5, nocode),
+    json_code_block: $ => seq(
+      $.json_code_start,
+      $.json_code_body,
+      $.code_end,
+    ),
+
+    base_code_block: $ => seq(
       $.code_start,
       $.code_body,
       $.code_end,
     ),
+
+    code_block: $ => choice($.base_code_block, $.js_code_block, $.json_code_block),
 
     key_value: $ => prec.left(seq(
       /[a-zA-Z]+/,
