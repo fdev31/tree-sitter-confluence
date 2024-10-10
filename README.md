@@ -21,7 +21,8 @@ parser_config.confluence_wiki = {
 
 
 ```sh
-cp queries/highlights.scm /home/fab/.local/share/nvim/lazy/nvim-treesitter/queries/confluence_wiki
+mkdir -p ~/.config/nvim/queries/confluence_wiki
+cp queries/highlights.scm ~/.config/nvim/queries/confluence_wiki/highlights.scm
 ```
 
 # TODO
