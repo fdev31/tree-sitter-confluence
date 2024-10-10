@@ -50,7 +50,10 @@
   "tree-sitter": [
     {
       "scope": "source.confluence_wiki",
-      "injection-regex": "^confluence_wiki$"
+      "injection-regex": "^confluence_wiki$",
+      "highlights": [
+        "queries/highlights.scm"
+      ]
     }
   ]
 }
