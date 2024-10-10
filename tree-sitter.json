@@ -7,9 +7,7 @@
       "path": ".",
       "file-types": null,
       "injection-regex": "^confluence_wiki$",
-      "highlights": [
-        "queries/highlights.scm"
-      ]
+      "highlights": "queries/highlights.scm"
     }
   ],
   "metadata": {
