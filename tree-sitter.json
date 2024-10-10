@@ -6,7 +6,10 @@
       "scope": "source.confluence_wiki",
       "path": ".",
       "file-types": null,
-      "injection-regex": "^confluence_wiki$"
+      "injection-regex": "^confluence_wiki$",
+      "highlights": [
+        "queries/highlights.scm"
+      ]
     }
   ],
   "metadata": {
