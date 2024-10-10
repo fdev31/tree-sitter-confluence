@@ -5,7 +5,9 @@
       "camelcase": "ConfluenceWiki",
       "scope": "source.confluence_wiki",
       "path": ".",
-      "file-types": null,
+      "file-types": [
+        "confluence_wiki"
+      ],
       "injection-regex": "^confluence_wiki$",
       "highlights": "queries/highlights.scm"
     }
