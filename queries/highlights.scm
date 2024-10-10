@@ -10,6 +10,7 @@
 (h5_heading) @constructor
 (h6_heading) @markup.heading
 (table_header) @variable
+(table_header_cell) @attribute
 (table_cell) @field
 (monospace) @symbol
 (code_block) @symbol
