@@ -1,4 +1,5 @@
-const nocode = /[^\n]*(\n[^{]*|\n\{[^c]*|\n\{c[^o]*|\n\{co[^d]*|\n\{cod[^e]*|\n\{code[^}]*|\n\{code\}.*)/;
+const nocode = /./;
+// const nocode = /[^\n]*(\n[^{]*|\n\{[^c]*|\n\{c[^o]*|\n\{co[^d]*|\n\{cod[^e]*|\n\{code[^}]*|\n\{code\}.*)/;
 // do not allow '{{' sequence:
 const nobracket = /[^{]*/;
 
@@ -85,30 +86,27 @@ module.exports = grammar({
 
     text: $ => prec(-1, /[^\s\n*_\-{}!\[\]|]+/),
 
-    bold: $ => /[*][^*\n]+[*]/,
 
-    italic: $ => seq(
+    bold: $ => seq(
+      '*',
+      /[^ \n]/,
+      repeat(/[^*]/),
+      '*'
+    ),
+
+    italic: $ => prec.right(seq(
       / _[^_]/,
       repeat1($.text),
       '_'
-    ),
+    )),
 
     strikethrough: $ => seq(
       /-[^- ]/,
-      repeat1($._inline_content_no_strikethrough),
+      /[^_\n]+/,
       '-'
     ),
 
-    _inline_content_no_strikethrough: $ => choice(
-      $.text,
-      $.bold,
-      $.italic,
-      $.monospace,
-      $.url,
-      $.color,
-      $.image,
-      $.link
-    ),
+    _inline_content_no_strikethrough: $ => /[^_\n]/,
 
     monospace: $ => seq(
       '{{',
@@ -156,11 +154,11 @@ module.exports = grammar({
 
     language: $ => /[a-z]+/,
     code_start: $ => prec(9, seq('{code', optional(seq(':', $.language)), '}')),
-    code_end: $ => prec(10, '{code}'),
-    code_body: $ => prec(5, nocode),
+    code_end: $ => prec(20, '{code}'),
+    code_body: $ => repeat1(prec(5, nocode)),
 
     js_code_start: $ => prec(9, '{code:js}'),
-    js_code_body: $ => prec(5, nocode),
+    js_code_body: $ => repeat1(prec(5, nocode)),
     js_code_block: $ => seq(
       $.js_code_start,
       $.js_code_body,
@@ -168,7 +166,7 @@ module.exports = grammar({
     ),
 
     json_code_start: $ => prec(9, '{code:json}'),
-    json_code_body: $ => prec(5, nocode),
+    json_code_body: $ => repeat1(prec(5, nocode)),
     json_code_block: $ => seq(
       $.json_code_start,
       $.json_code_body,
@@ -184,13 +182,14 @@ module.exports = grammar({
     code_block: $ => choice($.base_code_block, $.js_code_block, $.json_code_block),
 
     key_value: $ => prec.left(seq(
+      optional('|'),
       /[a-zA-Z]+/,
       '=',
       /[^\s}|:]+/,
     )),
     panel_block: $ => prec.right(seq(
       '{panel',
-      optional(seq(':', repeat1(seq($.key_value, optional('|'))))),
+      optional(seq(':', repeat1($.key_value))),
       '}',
       repeat($._block),
       '{panel}'
@@ -229,9 +228,10 @@ module.exports = grammar({
       'panel_block',
       'quote_block',
       'code_block',
-      '_paragraph',
       'bullet_list',
       'numbered_list_item',
+      '_paragraph',
+      'inline',
       'bold',
       'italic',
       'strikethrough',
@@ -240,7 +240,6 @@ module.exports = grammar({
       'color',
       'image',
       'link',
-      'inline',
       'text'
     ]
   ]
