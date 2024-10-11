@@ -187,11 +187,10 @@ module.exports = grammar({
       /[a-zA-Z]+/,
       '=',
       /[^\s}|:]+/,
-      optional('|')
     )),
     panel_block: $ => prec.right(seq(
       '{panel',
-      optional(seq(':', repeat1(seq($.key_value, '|')))),
+      optional(seq(':', repeat1(seq($.key_value, optional('|'))))),
       '}',
       repeat($._block),
       '{panel}'
