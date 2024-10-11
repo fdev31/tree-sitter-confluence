@@ -10,7 +10,7 @@ module.exports = grammar({
 
     _block: $ => prec(5, choice(
       $.numbered_list,
-      $.bullet_list,
+      prec(5, $.bullet_list),
       $.heading,
       $._paragraph,
       $.code_block,
