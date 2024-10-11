@@ -1,4 +1,6 @@
 const nocode = /[^\n]*(\n[^{]*|\n\{[^c]*|\n\{c[^o]*|\n\{co[^d]*|\n\{cod[^e]*|\n\{code[^}]*|\n\{code\}.*)/;
+// do not allow '{{' sequence:
+const nobracket = /[^{]*/;
 
 module.exports = grammar({
   name: 'confluence_wiki',
@@ -86,24 +88,13 @@ module.exports = grammar({
     bold: $ => /[*][^*\n]+[*]/,
 
     italic: $ => seq(
-      '_',
-      repeat1($._inline_content_no_italic),
+      / _[^_]/,
+      repeat1($.text),
       '_'
     ),
 
-    _inline_content_no_italic: $ => choice(
-      $.text,
-      $.bold,
-      $.strikethrough,
-      $.monospace,
-      $.url,
-      $.color,
-      $.image,
-      $.link
-    ),
-
     strikethrough: $ => seq(
-      '-',
+      /-[^- ]/,
       repeat1($._inline_content_no_strikethrough),
       '-'
     ),
@@ -121,8 +112,8 @@ module.exports = grammar({
 
     monospace: $ => seq(
       '{{',
-      repeat1($._inline_content_no_monospace),
-      '}}'
+      repeat(/[^{]/),
+      prec(2, '}}')
     ),
 
     _inline_content_no_monospace: $ => choice(
@@ -153,7 +144,7 @@ module.exports = grammar({
     ),
 
 
-    colorcode: $ => /[a-zA-Z#0-9]+/,
+    colorcode: $ => prec(-1, /[a-zA-Z#0-9]+/),
     color_start: $ => seq('{color:', $.colorcode, '}'),
     color_end: $ => '{color}',
 
