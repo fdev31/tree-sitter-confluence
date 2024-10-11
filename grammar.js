@@ -10,7 +10,7 @@ module.exports = grammar({
 
     _block: $ => prec(5, choice(
       $.numbered_list,
-      prec(5, $.bullet_list),
+      $.bullet_list,
       $.heading,
       $._paragraph,
       $.code_block,
@@ -186,7 +186,8 @@ module.exports = grammar({
     key_value: $ => prec.left(seq(
       /[a-zA-Z]+/,
       '=',
-      /[^\s}|:]+\|?/,
+      /[^\s}|:]+/,
+      optional('|')
     )),
     panel_block: $ => prec.right(seq(
       '{panel',
