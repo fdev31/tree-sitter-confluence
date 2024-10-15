@@ -212,7 +212,7 @@ module.exports = grammar({
       repeat1(seq($.table_cell, '|')),
     )),
 
-    table_cell: $ => /[^|]+/,
+    table_cell: $ => repeat1($._inline_content),
     table_header_cell: $ => /[^|]+/,
 
   },
