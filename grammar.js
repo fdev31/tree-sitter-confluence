@@ -86,11 +86,11 @@ module.exports = grammar({
 
     text: $ => prec(-1, /[^\s\n*_\-{}!\[\]|]+/),
 
-
     bold: $ => seq(
       '*',
       /[^ \n]/,
       repeat(/[^*]/),
+      /[^ \n]/,
       '*'
     ),
 
@@ -101,12 +101,11 @@ module.exports = grammar({
     )),
 
     strikethrough: $ => seq(
-      /-[^- ]/,
+      /-[^- \n]/,
       /[^_\n]+/,
+      /[^- \n]/,
       '-'
     ),
-
-    _inline_content_no_strikethrough: $ => /[^_\n]/,
 
     monospace: $ => seq(
       '{{',
