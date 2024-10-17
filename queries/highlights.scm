@@ -1,4 +1,4 @@
-(strikethrough) @comment
+;(strikethrough) @comment
 (italic) @text.emphasis
 (bold) @text.strong
 (color) @parameter
@@ -16,5 +16,6 @@
 (code_block) @symbol
 (quote_block) @annotation
 (panel_block) @annotation
+(key_value) @attribute
 (link) @markup.underline
 (image) @constructor

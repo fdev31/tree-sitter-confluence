@@ -79,18 +79,16 @@ module.exports = grammar({
       $.italic,
       $.link,
       $.monospace,
-      $.strikethrough,
+      //$.strikethrough,
       $.text,
       $.url,
     ),
 
-    text: $ => prec(-1, /[^\s\n*_\-{}!\[\]|]+/),
+    text: $ => prec(-1, /[^*_\s{}!\[\]|]+/),
 
     bold: $ => seq(
       '*',
-      /[^ \n]/,
       repeat(/[^*]/),
-      /[^ \n]/,
       '*'
     ),
 
@@ -100,28 +98,17 @@ module.exports = grammar({
       '_'
     )),
 
-    strikethrough: $ => seq(
-      /-[^- \n]/,
-      /[^_\n]+/,
-      /[^- \n]/,
-      '-'
-    ),
+    //strikethrough: $ => seq(
+    //  ' -',
+    //  /[^-\s]/,
+    //  /[^-\n]+/,
+    //  /[^-\s]-\s/,
+    //),
 
     monospace: $ => seq(
       '{{',
       repeat(/[^{]/),
       prec(2, '}}')
-    ),
-
-    _inline_content_no_monospace: $ => choice(
-      $.text,
-      $.bold,
-      $.italic,
-      $.strikethrough,
-      $.url,
-      $.color,
-      $.image,
-      $.link
     ),
 
     url: $ => /https?:\/\/[^\s\]]+/,
@@ -184,7 +171,7 @@ module.exports = grammar({
       optional('|'),
       /[a-zA-Z]+/,
       '=',
-      /[^\s}|:]+/,
+      /[^|}]+/,
     )),
     panel_block: $ => prec.right(seq(
       '{panel',
@@ -233,7 +220,7 @@ module.exports = grammar({
       'inline',
       'bold',
       'italic',
-      'strikethrough',
+      //'strikethrough',
       'monospace',
       'url',
       'color',
