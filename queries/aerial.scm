@@ -1,35 +1,35 @@
 (heading
-  (h1_heading (_) @name)
+  (h1_heading (text)  @name)
   (#set! "kind" "Interface")
-  (#set! "level" "1")
+  (#set! "level" 1)
 ) @symbol
 
 (heading
-  (h2_heading (_) @name)
+  (h2_heading (text) @name)
   (#set! "kind" "Interface")
-  (#set! "level" "2")
+  (#set! "level" 2)
 ) @symbol
 
 (heading
-  (h3_heading (_) @name)
+  (h3_heading (text) @name)
   (#set! "kind" "Interface")
-  (#set! "level" "3")
+  (#set! "level" 3)
 ) @symbol
 
 (heading
-  (h4_heading (_) @name)
+  (h4_heading (text) @name)
   (#set! "kind" "Interface")
-  (#set! "level" "4")
+  (#set! "level" 4)
 ) @symbol
 
 (heading
-  (h5_heading (_) @name)
+  (h5_heading (text) @name)
   (#set! "kind" "Interface")
-  (#set! "level" "5")
+  (#set! "level" 5)
 ) @symbol
 
 (heading
-  (h6_heading (_) @name)
+  (h6_heading (text) @name)
   (#set! "kind" "Interface")
-  (#set! "level" "6")
+  (#set! "level" 6)
 ) @symbol
