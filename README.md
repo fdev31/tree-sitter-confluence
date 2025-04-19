@@ -27,6 +27,7 @@ mkdir -p ~/.config/nvim/queries/confluence_wiki
 cp queries/*.scm ~/.config/nvim/queries/confluence_wiki/
 ```
 
-# TODO
+Quoting https://github.com/nvim-treesitter/nvim-treesitter
 
-- Investigate highlights.scm installation issues
+  Note that neither :TSInstall nor :TSInstallFromGrammar copy query files from the grammar repository. If you want your installed grammar to be useful, you must manually add query files to your local nvim-treesitter installation. Note also that module functionality is only triggered if your language's filetype is correctly identified. If Neovim does not detect your language's filetype by default, you can use Neovim's vim.filetype.add() to add a custom detection rule.
+
