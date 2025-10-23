@@ -169,6 +169,11 @@ module.exports = grammar({
     bash_code_block: ($) =>
       seq($.bash_code_start, $.bash_code_body, $.code_end),
 
+    sh_code_start: ($) => prec(9, "{code:sh}"),
+    sh_code_body: ($) => repeat1(prec(5, nocode)),
+    sh_code_block: ($) =>
+      seq($.sh_code_start, $.sh_code_body, $.code_end),
+
     base_code_block: ($) => seq($.code_start, $.code_body, $.code_end),
 
     key_value: ($) => prec.left(seq(optional("|"), /[a-zA-Z]+/, "=", /[^|}]+/)),
@@ -192,6 +197,7 @@ module.exports = grammar({
         $.json_code_block,
         $.python_code_block,
         $.bash_code_block,
+        $.sh_code_block,
       ),
 
     key_value: $ => prec.left(seq(
