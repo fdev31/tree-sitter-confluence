@@ -159,13 +159,40 @@ module.exports = grammar({
       $.code_end,
     ),
 
-    base_code_block: $ => seq(
-      $.code_start,
-      $.code_body,
-      $.code_end,
-    ),
+    python_code_start: ($) => prec(9, "{code:python}"),
+    python_code_body: ($) => repeat1(prec(5, nocode)),
+    python_code_block: ($) =>
+      seq($.python_code_start, $.python_code_body, $.code_end),
 
-    code_block: $ => choice($.base_code_block, $.js_code_block, $.json_code_block),
+    bash_code_start: ($) => prec(9, "{code:bash}"),
+    bash_code_body: ($) => repeat1(prec(5, nocode)),
+    bash_code_block: ($) =>
+      seq($.bash_code_start, $.bash_code_body, $.code_end),
+
+    base_code_block: ($) => seq($.code_start, $.code_body, $.code_end),
+
+    key_value: ($) => prec.left(seq(optional("|"), /[a-zA-Z]+/, "=", /[^|}]+/)),
+    panel_block: ($) =>
+      prec.right(
+        seq(
+          "{panel",
+          optional(seq(":", repeat1($.key_value))),
+          "}",
+          repeat($._block),
+          "{panel}",
+        ),
+      ),
+
+    quote_block: ($) => seq("{quote}", repeat($._inline_content), "{quote}"),
+
+    code_block: ($) =>
+      choice(
+        $.base_code_block,
+        $.js_code_block,
+        $.json_code_block,
+        $.python_code_block,
+        $.bash_code_block,
+      ),
 
     key_value: $ => prec.left(seq(
       optional('|'),
