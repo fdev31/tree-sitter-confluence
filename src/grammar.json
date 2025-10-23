@@ -862,6 +862,42 @@
         }
       ]
     },
+    "sh_code_start": {
+      "type": "PREC",
+      "value": 9,
+      "content": {
+        "type": "STRING",
+        "value": "{code:sh}"
+      }
+    },
+    "sh_code_body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "PREC",
+        "value": 5,
+        "content": {
+          "type": "PATTERN",
+          "value": "."
+        }
+      }
+    },
+    "sh_code_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "sh_code_start"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sh_code_body"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "code_end"
+        }
+      ]
+    },
     "base_code_block": {
       "type": "SEQ",
       "members": [
@@ -1006,6 +1042,10 @@
         {
           "type": "SYMBOL",
           "name": "bash_code_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sh_code_block"
         }
       ]
     },
