@@ -1,5 +1,5 @@
 (heading
-  (h1_heading (text)  @name)
+  (h1_heading (text) @name)
   (#set! "kind" "Interface")
   (#set! "level" 1)
 ) @symbol

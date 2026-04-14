@@ -9,7 +9,8 @@
         "confluence_wiki"
       ],
       "injection-regex": "^confluence_wiki$",
-      "highlights": "queries/highlights.scm"
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm"
     }
   ],
   "metadata": {

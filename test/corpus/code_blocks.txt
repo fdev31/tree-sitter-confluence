@@ -1,0 +1,63 @@
+==================
+Code block with language
+==================
+
+{code:js}
+let x = 1;
+{code}
+
+---
+
+(document
+  (code_block
+    language: (language)
+    body: (code_body)))
+
+==================
+Code block without language
+==================
+
+{code}
+some code here
+{code}
+
+---
+
+(document
+  (code_block
+    body: (code_body)))
+
+==================
+Code block python
+==================
+
+{code:python}
+def hello():
+    print("world")
+{code}
+
+---
+
+(document
+  (code_block
+    language: (language)
+    body: (code_body)))
+
+==================
+Code block multiline
+==================
+
+{code:js}
+let foo = "bar";
+let bar = 5 + 2;
+function test() {
+  return true;
+}
+{code}
+
+---
+
+(document
+  (code_block
+    language: (language)
+    body: (code_body)))

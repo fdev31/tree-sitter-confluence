@@ -1,0 +1,63 @@
+==================
+Simple panel
+==================
+
+{panel}
+hello world
+{panel}
+
+---
+
+(document
+  (panel_block
+    (text)
+    (text)))
+
+==================
+Panel with formatting
+==================
+
+{panel}
+some *bold* text
+{panel}
+
+---
+
+(document
+  (panel_block
+    (text)
+    (bold)
+    (text)))
+
+==================
+Quote block
+==================
+
+{quote}
+this is a quote
+{quote}
+
+---
+
+(document
+  (quote_block
+    (text)
+    (text)
+    (text)
+    (text)))
+
+==================
+Panel with key values
+==================
+
+{panel:title=My Panel}
+content here
+{panel}
+
+---
+
+(document
+  (panel_block
+    (key_value)
+    (text)
+    (text)))

@@ -1,0 +1,30 @@
+==================
+Color text
+==================
+
+{color:red}hello{color}
+
+---
+
+(document
+  (color
+    (color_start
+      (colorcode))
+    (text)
+    (color_end)))
+
+==================
+Color with hex code
+==================
+
+{color:#ff0000}colored text{color}
+
+---
+
+(document
+  (color
+    (color_start
+      (colorcode))
+    (text)
+    (text)
+    (color_end)))

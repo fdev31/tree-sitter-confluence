@@ -1,66 +1,5 @@
 [
   {
-    "type": "base_code_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "code_body",
-          "named": true
-        },
-        {
-          "type": "code_end",
-          "named": true
-        },
-        {
-          "type": "code_start",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "bash_code_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "bash_code_body",
-          "named": true
-        },
-        {
-          "type": "bash_code_start",
-          "named": true
-        },
-        {
-          "type": "code_end",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "bash_code_body",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "bash_code_start",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "bold",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "bullet_list",
     "named": true,
     "fields": {},
@@ -124,6 +63,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -164,6 +107,10 @@
         },
         {
           "type": "monospace",
+          "named": true
+        },
+        {
+          "type": "strikethrough",
           "named": true
         },
         {
@@ -210,6 +157,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -250,6 +201,10 @@
         },
         {
           "type": "monospace",
+          "named": true
+        },
+        {
+          "type": "strikethrough",
           "named": true
         },
         {
@@ -296,6 +251,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -309,61 +268,27 @@
   {
     "type": "code_block",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "base_code_block",
-          "named": true
-        },
-        {
-          "type": "bash_code_block",
-          "named": true
-        },
-        {
-          "type": "js_code_block",
-          "named": true
-        },
-        {
-          "type": "json_code_block",
-          "named": true
-        },
-        {
-          "type": "python_code_block",
-          "named": true
-        },
-        {
-          "type": "sh_code_block",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "code_body",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "code_end",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "code_start",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "language",
-          "named": true
-        }
-      ]
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "code_body",
+            "named": true
+          }
+        ]
+      },
+      "language": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "language",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -407,6 +332,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -431,11 +360,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "colorcode",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "document",
@@ -495,6 +419,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "table",
           "named": true
         },
@@ -542,6 +470,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -582,6 +514,10 @@
         },
         {
           "type": "monospace",
+          "named": true
+        },
+        {
+          "type": "strikethrough",
           "named": true
         },
         {
@@ -628,6 +564,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -668,6 +608,10 @@
         },
         {
           "type": "monospace",
+          "named": true
+        },
+        {
+          "type": "strikethrough",
           "named": true
         },
         {
@@ -714,6 +658,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -754,6 +702,10 @@
         },
         {
           "type": "monospace",
+          "named": true
+        },
+        {
+          "type": "strikethrough",
           "named": true
         },
         {
@@ -808,87 +760,6 @@
     "fields": {}
   },
   {
-    "type": "italic",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "text",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "js_code_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "code_end",
-          "named": true
-        },
-        {
-          "type": "js_code_body",
-          "named": true
-        },
-        {
-          "type": "js_code_start",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "js_code_body",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "js_code_start",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "json_code_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "code_end",
-          "named": true
-        },
-        {
-          "type": "json_code_body",
-          "named": true
-        },
-        {
-          "type": "json_code_start",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "json_code_body",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "json_code_start",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "key_value",
     "named": true,
     "fields": {}
@@ -900,6 +771,21 @@
   },
   {
     "type": "monospace",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "monospace_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "monospace_content",
     "named": true,
     "fields": {}
   },
@@ -948,6 +834,10 @@
         },
         {
           "type": "monospace",
+          "named": true
+        },
+        {
+          "type": "strikethrough",
           "named": true
         },
         {
@@ -1022,6 +912,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "table",
           "named": true
         },
@@ -1035,39 +929,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "python_code_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "code_end",
-          "named": true
-        },
-        {
-          "type": "python_code_body",
-          "named": true
-        },
-        {
-          "type": "python_code_start",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "python_code_body",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "python_code_start",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "quote_block",
@@ -1102,6 +963,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -1111,39 +976,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "sh_code_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "code_end",
-          "named": true
-        },
-        {
-          "type": "sh_code_body",
-          "named": true
-        },
-        {
-          "type": "sh_code_start",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sh_code_body",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "sh_code_start",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "table",
@@ -1197,6 +1029,10 @@
           "named": true
         },
         {
+          "type": "strikethrough",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         },
@@ -1238,28 +1074,11 @@
     }
   },
   {
-    "type": "text",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "\n",
-    "named": false
-  },
-  {
-    "type": "\n\n",
-    "named": false
-  },
-  {
     "type": "!",
     "named": false
   },
   {
     "type": "# ",
-    "named": false
-  },
-  {
-    "type": "*",
     "named": false
   },
   {
@@ -1299,11 +1118,19 @@
     "named": false
   },
   {
-    "type": "_",
-    "named": false
+    "type": "bold",
+    "named": true
+  },
+  {
+    "type": "code_body",
+    "named": true
   },
   {
     "type": "color_end",
+    "named": true
+  },
+  {
+    "type": "colorcode",
     "named": true
   },
   {
@@ -1331,11 +1158,23 @@
     "named": false
   },
   {
+    "type": "italic",
+    "named": true
+  },
+  {
     "type": "language",
     "named": true
   },
   {
+    "type": "strikethrough",
+    "named": true
+  },
+  {
     "type": "table_header_cell",
+    "named": true
+  },
+  {
+    "type": "text",
     "named": true
   },
   {
@@ -1344,26 +1183,6 @@
   },
   {
     "type": "{code",
-    "named": false
-  },
-  {
-    "type": "{code:bash}",
-    "named": false
-  },
-  {
-    "type": "{code:json}",
-    "named": false
-  },
-  {
-    "type": "{code:js}",
-    "named": false
-  },
-  {
-    "type": "{code:python}",
-    "named": false
-  },
-  {
-    "type": "{code:sh}",
     "named": false
   },
   {

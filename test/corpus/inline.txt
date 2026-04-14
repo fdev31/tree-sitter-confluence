@@ -1,0 +1,109 @@
+==================
+Bold text
+==================
+
+hello *world* there
+
+---
+
+(document
+  (text)
+  (bold)
+  (text))
+
+==================
+Italic text
+==================
+
+hello _world_ there
+
+---
+
+(document
+  (text)
+  (italic)
+  (text))
+
+==================
+Strikethrough text
+==================
+
+hello -world- there
+
+---
+
+(document
+  (text)
+  (strikethrough)
+  (text))
+
+==================
+Monospace text
+==================
+
+hello {{world}} there
+
+---
+
+(document
+  (text)
+  (monospace
+    (monospace_content))
+  (text))
+
+==================
+URL inline
+==================
+
+visit http://google.com today
+
+---
+
+(document
+  (text)
+  (url)
+  (text))
+
+==================
+Link with label
+==================
+
+[click here|http://example.com]
+
+---
+
+(document
+  (link))
+
+==================
+Link without label
+==================
+
+[http://example.com]
+
+---
+
+(document
+  (link))
+
+==================
+Image
+==================
+
+!screenshot.png!
+
+---
+
+(document
+  (image))
+
+==================
+Image with alt text
+==================
+
+!screenshot.png|alt text here!
+
+---
+
+(document
+  (image))

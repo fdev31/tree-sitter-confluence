@@ -1,0 +1,41 @@
+==================
+Simple table
+==================
+
+|cell1|cell2|
+|cell3|cell4|
+
+---
+
+(document
+  (table
+    (table_row
+      (table_cell
+        (text))
+      (table_cell
+        (text)))
+    (table_row
+      (table_cell
+        (text))
+      (table_cell
+        (text)))))
+
+==================
+Table with header
+==================
+
+||header1||header2||
+|cell1|cell2|
+
+---
+
+(document
+  (table
+    (table_header
+      (table_header_cell)
+      (table_header_cell))
+    (table_row
+      (table_cell
+        (text))
+      (table_cell
+        (text)))))

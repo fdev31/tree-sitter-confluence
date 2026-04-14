@@ -1,265 +1,180 @@
-const nocode = /./;
-// const nocode = /[^\n]*(\n[^{]*|\n\{[^c]*|\n\{c[^o]*|\n\{co[^d]*|\n\{cod[^e]*|\n\{code[^}]*|\n\{code\}.*)/;
-// do not allow '{{' sequence:
-const nobracket = /[^{]*/;
-
 module.exports = grammar({
   name: 'confluence_wiki',
 
-  rules: {
-    document: $ => repeat($._block),
+  externals: $ => [
+    $.code_body,
+  ],
 
-    _block: $ => prec(5, choice(
-      $.numbered_list,
-      $.bullet_list,
+  extras: $ => [/[ \t]/],
+
+  rules: {
+    document: $ => repeat(choice($._block, $._newline)),
+
+    _newline: $ => /\n|\r\n?/,
+
+    _block: $ => choice(
       $.heading,
-      $._paragraph,
+      $.bullet_list,
+      $.numbered_list,
       $.code_block,
       $.panel_block,
       $.quote_block,
       $.table,
+      $._paragraph,
+    ),
+
+    // ── Headings ──────────────────────────────────────────────
+    heading: $ => choice(
+      $.h1_heading, $.h2_heading, $.h3_heading,
+      $.h4_heading, $.h5_heading, $.h6_heading,
+    ),
+
+    h1_heading: $ => seq(token(prec(10, 'h1. ')), repeat($._inline), $._newline),
+    h2_heading: $ => seq(token(prec(10, 'h2. ')), repeat($._inline), $._newline),
+    h3_heading: $ => seq(token(prec(10, 'h3. ')), repeat($._inline), $._newline),
+    h4_heading: $ => seq(token(prec(10, 'h4. ')), repeat($._inline), $._newline),
+    h5_heading: $ => seq(token(prec(10, 'h5. ')), repeat($._inline), $._newline),
+    h6_heading: $ => seq(token(prec(10, 'h6. ')), repeat($._inline), $._newline),
+
+    // ── Lists ─────────────────────────────────────────────────
+    bullet_list: $ => prec.right(repeat1(choice(
+      $.bullet_list_item1,
+      $.bullet_list_item2,
+      $.bullet_list_item3,
+      $.bullet_list_item4,
+      $.bullet_list_item5,
+    ))),
+
+    bullet_list_item1: $ => seq(token(prec(10, '* ')), repeat($._inline), $._newline),
+    bullet_list_item2: $ => seq(token(prec(10, '** ')), repeat($._inline), $._newline),
+    bullet_list_item3: $ => seq(token(prec(10, '*** ')), repeat($._inline), $._newline),
+    bullet_list_item4: $ => seq(token(prec(10, '**** ')), repeat($._inline), $._newline),
+    bullet_list_item5: $ => seq(token(prec(10, '***** ')), repeat($._inline), $._newline),
+
+    numbered_list: $ => prec.right(repeat1($.numbered_list_item)),
+
+    numbered_list_item: $ => seq(token(prec(10, '# ')), repeat($._inline), $._newline),
+
+    // ── Code blocks ───────────────────────────────────────────
+    language: $ => /[a-zA-Z][a-zA-Z0-9_]*/,
+
+    code_block: $ => seq(
+      token(prec(10, '{code')),
+      optional(seq(':', field('language', $.language))),
+      '}',
+      optional($._newline),
+      optional(field('body', $.code_body)),
+      token(prec(10, '{code}')),
+    ),
+
+    // ── Panel block ───────────────────────────────────────────
+    key_value: $ => seq(
+      optional('|'),
+      /[a-zA-Z]+/,
+      '=',
+      /[^|}]+/,
+    ),
+
+    panel_block: $ => prec.right(seq(
+      token(prec(10, '{panel')),
+      optional(seq(':', repeat1($.key_value))),
+      '}',
+      repeat(choice($._block, $._newline)),
+      token(prec(10, '{panel}')),
     )),
 
-    numbered_list: $ => prec.left(seq(repeat1($.numbered_list_item), '\n\n')),
+    // ── Quote block ───────────────────────────────────────────
+    quote_block: $ => seq(
+      token(prec(10, '{quote}')),
+      repeat(choice($._inline, $._newline)),
+      token(prec(10, '{quote}')),
+    ),
 
-    numbered_list_item: $ => prec.left(seq(
-      '# ',
-      repeat($._inline_content),
+    // ── Table ─────────────────────────────────────────────────
+    table: $ => prec.right(seq(
+      repeat($.table_header),
+      repeat1(seq($.table_row, $._newline)),
     )),
 
-    bullet_list: $ => prec.left(seq(repeat1(choice(
-      $.bullet_list_item1, $.bullet_list_item2, $.bullet_list_item3, $.bullet_list_item4, $.bullet_list_item5
-    )), '\n\n')),
+    table_header: $ => seq(
+      '||',
+      repeat1(seq($.table_header_cell, '||')),
+      $._newline,
+    ),
 
-    bullet_list_item1: $ => prec.left(seq('* ', repeat($._inline_content))),
-    bullet_list_item2: $ => prec.left(seq('** ', repeat($._inline_content))),
-    bullet_list_item3: $ => prec.left(seq('*** ', repeat($._inline_content))),
-    bullet_list_item4: $ => prec.left(seq('**** ', repeat($._inline_content))),
-    bullet_list_item5: $ => prec.left(seq('***** ', repeat($._inline_content))),
+    table_row: $ => seq(
+      '|',
+      repeat1(seq($.table_cell, '|')),
+    ),
 
-    heading: $ => choice($.h1_heading, $.h2_heading, $.h3_heading, $.h4_heading, $.h5_heading, $.h6_heading),
+    table_cell: $ => repeat1($._inline),
+    table_header_cell: $ => /[^|\n]+/,
 
-    h1_heading: $ => prec.right(seq(
-      'h1. ',
-      repeat($._inline_content),
-      '\n'
-    )),
-    h2_heading: $ => prec.right(seq(
-      'h2. ',
-      repeat($._inline_content),
-      '\n'
-    )),
-    h3_heading: $ => prec.right(seq(
-      'h3. ',
-      repeat($._inline_content),
-      '\n'
-    )),
-    h4_heading: $ => prec.right(seq(
-      'h4. ',
-      repeat($._inline_content),
-      '\n'
-    )),
-    h5_heading: $ => prec.right(seq(
-      'h5. ',
-      repeat($._inline_content),
-      '\n'
-    )),
-    h6_heading: $ => prec.right(seq(
-      'h6. ',
-      repeat($._inline_content),
-      '\n'
-    )),
+    // ── Paragraphs ────────────────────────────────────────────
+    _paragraph: $ => prec(-1, seq(repeat1($._inline), $._newline)),
 
-    _paragraph: $ => prec.left(repeat1($._inline_content)),
-
-    _inline_content: $ => choice(
+    // ── Inline content ────────────────────────────────────────
+    _inline: $ => choice(
       $.bold,
+      $.italic,
+      $.monospace,
+      $.strikethrough,
       $.color,
       $.image,
-      $.italic,
       $.link,
-      $.monospace,
-      //$.strikethrough,
-      $.text,
       $.url,
+      $.text,
+      // Single-character fallback for unmatched formatting delimiters.
+      // This ensures characters like *, _, -, etc. that don't form a
+      // valid inline construct are still consumed as plain text.
+      alias(token(prec(-2, /[*_\-{}\[\]!|:\/#]/)), $.text),
     ),
 
-    text: $ => prec(-1, /[^*_\s{}!\[\]|]+/),
+    // text: runs of characters that don't contain formatting delimiters or newlines.
+    // Excludes formatting delimiters, whitespace, newlines, colons, hashes, and slashes.
+    // Whitespace is handled by extras. Colons/slashes are excluded so URL tokens
+    // can match at word boundaries (longest match rule).
+    text: $ => /[^\s*_\-{}\[\]!|:\/#]+/,
 
-    bold: $ => seq(
-      '*',
-      repeat(/[^*]/),
-      '*'
-    ),
+    // Bold: *content* — single token, prec(2) to beat text on equal length
+    bold: $ => token(prec(2, seq('*', /[^*\n]+/, '*'))),
 
-    italic: $ => prec.right(seq(
-      / _[^_]/,
-      repeat1($.text),
-      '_'
-    )),
+    // Italic: _content_ — single token
+    italic: $ => token(prec(2, seq('_', /[^_\n]+/, '_'))),
 
-    //strikethrough: $ => seq(
-    //  ' -',
-    //  /[^-\s]/,
-    //  /[^-\n]+/,
-    //  /[^-\s]-\s/,
-    //),
+    // Strikethrough: -content- — single token
+    strikethrough: $ => token(prec(2, seq('-', /[^\-\n]+/, '-'))),
 
     monospace: $ => seq(
-      '{{',
-      repeat(/[^{]/),
-      prec(2, '}}')
+      token(prec(10, '{{')),
+      alias(repeat(/[^}\n]/), $.monospace_content),
+      token(prec(10, '}}')),
     ),
 
-    url: $ => /https?:\/\/[^\s\]]+/,
+    url: $ => token(prec(5, /https?:\/\/[^\s\]]+/)),
 
     image: $ => seq(
       '!',
-      /[a-zA-Z.][^\|!]+/,
-      optional(seq('|', /[^\|!]+/)),
+      /[a-zA-Z.][^|!\n]+/,
+      optional(seq('|', /[^|!\n]+/)),
       '!',
     ),
 
     link: $ => seq(
       '[',
-      /[^\|\]]+/,
-      optional(seq('|', /[^\|\]]+/)),
-      ']'
+      /[^|\]\n]+/,
+      optional(seq('|', /[^|\]\n]+/)),
+      ']',
     ),
 
-
-    colorcode: $ => prec(-1, /[a-zA-Z#0-9]+/),
-    color_start: $ => seq('{color:', $.colorcode, '}'),
-    color_end: $ => '{color}',
+    colorcode: $ => /[a-zA-Z#0-9]+/,
+    color_start: $ => seq(token(prec(10, '{color:')), $.colorcode, '}'),
+    color_end: $ => token(prec(10, '{color}')),
 
     color: $ => seq(
       $.color_start,
-      repeat($._inline_content),
-      $.color_end
+      repeat($._inline),
+      $.color_end,
     ),
-
-    language: $ => /[a-z]+/,
-    code_start: $ => prec(9, seq('{code', optional(seq(':', $.language)), '}')),
-    code_end: $ => prec(20, '{code}'),
-    code_body: $ => repeat1(prec(5, nocode)),
-
-    js_code_start: $ => prec(9, '{code:js}'),
-    js_code_body: $ => repeat1(prec(5, nocode)),
-    js_code_block: $ => seq(
-      $.js_code_start,
-      $.js_code_body,
-      $.code_end,
-    ),
-
-    json_code_start: $ => prec(9, '{code:json}'),
-    json_code_body: $ => repeat1(prec(5, nocode)),
-    json_code_block: $ => seq(
-      $.json_code_start,
-      $.json_code_body,
-      $.code_end,
-    ),
-
-    python_code_start: ($) => prec(9, "{code:python}"),
-    python_code_body: ($) => repeat1(prec(5, nocode)),
-    python_code_block: ($) =>
-      seq($.python_code_start, $.python_code_body, $.code_end),
-
-    bash_code_start: ($) => prec(9, "{code:bash}"),
-    bash_code_body: ($) => repeat1(prec(5, nocode)),
-    bash_code_block: ($) =>
-      seq($.bash_code_start, $.bash_code_body, $.code_end),
-
-    sh_code_start: ($) => prec(9, "{code:sh}"),
-    sh_code_body: ($) => repeat1(prec(5, nocode)),
-    sh_code_block: ($) =>
-      seq($.sh_code_start, $.sh_code_body, $.code_end),
-
-    base_code_block: ($) => seq($.code_start, $.code_body, $.code_end),
-
-    key_value: ($) => prec.left(seq(optional("|"), /[a-zA-Z]+/, "=", /[^|}]+/)),
-    panel_block: ($) =>
-      prec.right(
-        seq(
-          "{panel",
-          optional(seq(":", repeat1($.key_value))),
-          "}",
-          repeat($._block),
-          "{panel}",
-        ),
-      ),
-
-    quote_block: ($) => seq("{quote}", repeat($._inline_content), "{quote}"),
-
-    code_block: ($) =>
-      choice(
-        $.base_code_block,
-        $.js_code_block,
-        $.json_code_block,
-        $.python_code_block,
-        $.bash_code_block,
-        $.sh_code_block,
-      ),
-
-    key_value: $ => prec.left(seq(
-      optional('|'),
-      /[a-zA-Z]+/,
-      '=',
-      /[^|}]+/,
-    )),
-    panel_block: $ => prec.right(seq(
-      '{panel',
-      optional(seq(':', repeat1($.key_value))),
-      '}',
-      repeat($._block),
-      '{panel}'
-    )),
-
-    quote_block: $ => seq(
-      '{quote}',
-      repeat($._inline_content),
-      '{quote}'
-    ),
-
-    table: $ => prec.right(seq(repeat($.table_header), repeat1(seq($.table_row, '\n')))),
-
-    table_header: $ => prec.left(seq(
-      '||',
-      repeat1(seq($.table_header_cell, '||')),
-    )),
-
-    table_row: $ => prec.left(seq(
-      '|',
-      repeat1(seq($.table_cell, '|')),
-    )),
-
-    table_cell: $ => repeat1($._inline_content),
-    table_header_cell: $ => /[^|]+/,
-
   },
-
-  extras: $ => [/[\s]/],
-
-  precedences: $ => [
-    [
-      'heading',
-      'block',
-      'table',
-      'panel_block',
-      'quote_block',
-      'code_block',
-      'bullet_list',
-      'numbered_list_item',
-      '_paragraph',
-      'inline',
-      'bold',
-      'italic',
-      //'strikethrough',
-      'monospace',
-      'url',
-      'color',
-      'image',
-      'link',
-      'text'
-    ]
-  ]
 });

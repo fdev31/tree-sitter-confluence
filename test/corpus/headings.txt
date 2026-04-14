@@ -1,0 +1,79 @@
+==================
+Heading h1
+==================
+
+h1. Hello World
+
+---
+
+(document
+  (heading
+    (h1_heading
+      (text)
+      (text))))
+
+==================
+Heading h2
+==================
+
+h2. Subtitle Here
+
+---
+
+(document
+  (heading
+    (h2_heading
+      (text)
+      (text))))
+
+==================
+Heading h3
+==================
+
+h3. Section Title
+
+---
+
+(document
+  (heading
+    (h3_heading
+      (text)
+      (text))))
+
+==================
+Multiple headings
+==================
+
+h1. First Heading
+h2. Second Heading
+h3. Third Heading
+
+---
+
+(document
+  (heading
+    (h1_heading
+      (text)
+      (text)))
+  (heading
+    (h2_heading
+      (text)
+      (text)))
+  (heading
+    (h3_heading
+      (text)
+      (text))))
+
+==================
+Heading with bold
+==================
+
+h1. Hello *World*
+
+---
+
+(document
+  (heading
+    (h1_heading
+      (text)
+      (bold))))

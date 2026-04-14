@@ -1,0 +1,90 @@
+==================
+Simple bullet list
+==================
+
+* one
+* two
+* three
+
+---
+
+(document
+  (bullet_list
+    (bullet_list_item1
+      (text))
+    (bullet_list_item1
+      (text))
+    (bullet_list_item1
+      (text))))
+
+==================
+Nested bullet list
+==================
+
+* level one
+** level two
+*** level three
+
+---
+
+(document
+  (bullet_list
+    (bullet_list_item1
+      (text)
+      (text))
+    (bullet_list_item2
+      (text)
+      (text))
+    (bullet_list_item3
+      (text)
+      (text))))
+
+==================
+Bullet list with bold
+==================
+
+* hello *world*
+* plain text
+
+---
+
+(document
+  (bullet_list
+    (bullet_list_item1
+      (text)
+      (bold))
+    (bullet_list_item1
+      (text)
+      (text))))
+
+==================
+Numbered list
+==================
+
+# first
+# second
+# third
+
+---
+
+(document
+  (numbered_list
+    (numbered_list_item
+      (text))
+    (numbered_list_item
+      (text))
+    (numbered_list_item
+      (text))))
+
+==================
+Bullet list with link
+==================
+
+* [click here|http://example.com]
+
+---
+
+(document
+  (bullet_list
+    (bullet_list_item1
+      (link))))

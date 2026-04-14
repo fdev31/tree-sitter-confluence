@@ -1,6 +1,6 @@
-;(strikethrough) @markup.strikethrough
 (italic) @markup.italic @spell
 (bold) @markup.strong @spell
+(strikethrough) @markup.strikethrough
 (color) @variable.parameter
 (colorcode) @string
 (h1_heading) @markup.heading.1 @spell
@@ -19,4 +19,5 @@
 (key_value) @attribute
 (link) @markup.link
 (image) @markup.link
+(url) @markup.link.url
 (text) @spell
